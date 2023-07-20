@@ -1,3 +1,4 @@
+import json
 import os, smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -18,7 +19,7 @@ def send_verification_email(event, context):
     smtp_server = "smtp.gmail.com"
 
     for record in records:
-        event = record["body"] if is_records else record
+        event = json.loads(record["body"]) if is_records else record
         sender_email = os.getenv("EMAIL_SENDER")
         receiver_email = event["receiver_email"]
         password = os.getenv("EMAIL_PASSWORD")
